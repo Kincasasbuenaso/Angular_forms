@@ -1,0 +1,161 @@
+<h4>Formularios <small>Data</small></h4>
+<hr>
+<form [formGroup]='f' (ngSubmit)="guardar()" novalidate="novalidate" class="needs-validation">
+  <div>
+    <div class="form-group row" >
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               formControlName="nombre"
+               placeholder="Nombre" [ngClass]="{'is-invalid': !f.get('nombre').valid && f.get('nombre').touched}">
+         <!-- <div *ngIf="!f.controls['nombre'].valid" class="invalid-feedback">
+           *Nombre es obligatorio
+         </div> -->
+         <div *ngIf="f.controls['nombre'].errors?.required" class="invalid-feedback">
+           *Nombre es obligatorio
+         </div>
+         <div *ngIf="f.controls['nombre'].errors?.minlength" class="invalid-feedback">
+           *Minimo 3 caracteres
+         </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               formControlName="apellido"
+               placeholder="apellido">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+      <input class="form-control"
+             type="email"
+             formControlName="email"
+             placeholder="Correo electrónico">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+  {{f.valid}}
+</form>
+
+<br>
+<br>
+<hr>
+<h2>Formulario #2</h2>
+<form [formGroup]='f2' (ngSubmit)="guardarf2()" novalidate="novalidate" class="needs-validation">
+  <div formGroupName="nombreCompleto">
+    <div class="form-group row" >
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               formControlName="nombre"
+               placeholder="Nombre"
+               [ngClass]="{'is-invalid': !f2.get('nombreCompleto.nombre').valid && f2.get('nombreCompleto.nombre').touched}">
+               <!-- [ngClass]="{'is-invalid': !f2.get('nombre').valid && f2.get('nombre').touched}" -->
+         <div *ngIf="f2.get('nombreCompleto.nombre').errors?.required" class="invalid-feedback">
+           *Nombre es obligatorio
+         </div>
+         <div *ngIf="f2.get('nombreCompleto.nombre').errors?.minlength" class="invalid-feedback">
+           *Minimo 3 caracteres
+         </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               formControlName="apellido"
+               placeholder="apellido">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+      <input class="form-control"
+             type="email"
+             formControlName="email"
+             placeholder="Correo electrónico">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Username</label>
+    <div class="col-md-8">
+      <input class="form-control"
+             type="text"
+             formControlName="username"
+             >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Contraseña</label>
+    <div class="col-md-8">
+      <input class="form-control"
+             type="password"
+             formControlName="password"
+             >
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Confirmar contraseña</label>
+    <div class="col-md-8">
+      <input class="form-control"
+             type="password"
+             formControlName="passwordconfirmation"
+             >
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Hobbies</label>
+    <div class="col-md-8" formArrayName="hobbies">
+      <input
+             *ngFor="let hobbie of f2.controls['hobbies'].controls; let i = index"
+             class="form-control"
+             type="text"
+             [formControlName]="i" style="margin-bottom:5px;">
+    </div>
+    <button
+            (click)="addHobbie()"
+            type="button"
+            class="btn btn-primary"
+            >
+    Nuevo hobbie
+    </button>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+  {{f2.valid}}
+  <hr>
+  {{f2.status}}
+</form>

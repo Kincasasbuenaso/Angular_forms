@@ -1,0 +1,133 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form (ngSubmit)="Save(f)"  #f="ngForm" novalidate="" class="needs-validation">
+
+  <div>
+    <div class="form-group row" [ngClass]="{'was-validated': (nombre.errors?.required || nombre.errors?.minlength) && nombre.touched}">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control "
+               type="text"
+               placeholder="Nombre"
+               name="nombre"
+               [(ngModel)]="usuario.nombre"
+               required
+               minlength="5"
+               #nombre="ngModel">
+        <div *ngIf="nombre.errors?.required" class="invalid-feedback">
+          *Nombre es obligatorio
+        </div>
+        <div *ngIf="nombre.errors?.minlength" class="invalid-feedback">
+          *Minimo {{nombre.errors.minlength.requiredLength}} caracteres
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellidos</label>
+      <div class="col-8">
+
+        <input class="form-control"
+               type="text"
+               [(ngModel)]="usuario.apellidos"
+               name="apellidos"
+               placeholder="Apellido"
+               required>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-8">
+
+      <input class="form-control"
+             type="email"
+             name="email"
+             [(ngModel)]="usuario.email"
+             placeholder="Correo electrónico"
+             required
+             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+             #email="ngModel">
+     <div *ngIf="email.errors?.required" class="invalid-feedback">
+       *Email es obligatorio
+     </div>
+     <div *ngIf="email.errors?.pattern" class="invalid-feedback">
+       *Correo invalido
+     </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">País</label>
+    <div class="col-8">
+      <select
+            class="form-control"
+            [(ngModel)]="usuario.pais"
+            name="pais">
+        <option value="">Seleccione un pais</option>
+        <option
+                *ngFor="let pais of paises"
+                [value]="pais.codigo">{{pais.nombre}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sexo</label>
+    <div class="col-8">
+      <div
+        *ngFor ="let s of sexos"
+        class="form-check form-check-inline">
+        <input class="form-check-input"
+              [(ngModel)]="usuario.sexo"
+              type="radio"
+              name="sexo"
+              [value]="s">
+        <label class="form-check-label" for="inlineRadio1">{{ s }}</label>
+      </div>
+      <!-- <div class="form-check form-check-inline">
+        <input class="form-check-input"
+              [(ngModel)]="usuario.sexo"
+              type="radio"
+              name="inlineRadioOptions"
+              value="Hombre">
+        <label class="form-check-label" for="inlineRadio2">Hombre</label>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="col-8">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+              [(ngModel)]="usuario.acepta"
+              name="acepta"
+              type="checkbox"
+              required>
+        <label class="form-check-label" for="inlineCheckbox1">Acepto tratamiento de mis datos personales</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <!-- [disabled]="!f.valid" -->
+      <button
+            [disabled]="!f.valid"
+            type="submit"
+            class="btn btn-outline-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+  <pre>
+    {{ usuario | json}}
+  </pre>
+
+</form>
